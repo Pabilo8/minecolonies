@@ -148,6 +148,11 @@ public abstract class AbstractEntityAIBasic<J extends AbstractJob> extends Abstr
            */
           new AIEventTarget(AIBlockingEventType.AI_BLOCKING, this::updateVisualState),
           /*
+           * Place any non-restart regarding AITargets before this one
+           * Restart AI, building etc.
+           */
+          new AIEventTarget(AIBlockingEventType.STATE_BLOCKING, this::shouldRestart, this::restart),
+          /*
             If waitingForSomething returns true
             stop execution to wait for it.
             this keeps the current state
@@ -182,11 +187,6 @@ public abstract class AbstractEntityAIBasic<J extends AbstractJob> extends Abstr
            * Gather a needed item.
            */
           new AITarget(GATHERING_REQUIRED_MATERIALS, this::getNeededItem),
-          /*
-           * Place any non-restart regarding AITargets before this one
-           * Restart AI, building etc.
-           */
-          new AIEventTarget(AIBlockingEventType.STATE_BLOCKING, this::shouldRestart, this::restart),
           /*
            * Reset if not paused.
            */

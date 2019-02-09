@@ -378,7 +378,7 @@ public abstract class AbstractBuildingWorker extends AbstractBuilding
     @Override
     public void onWakeUp()
     {
-
+        getAssignedCitizen().stream().filter(Objects::nonNull).forEach(CitizenData::shouldRestart);
     }
 
     /**
